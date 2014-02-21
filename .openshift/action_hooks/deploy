@@ -1,0 +1,17 @@
+#!/bin/bash
+
+dbsize=$(mongo -quiet $OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/$OPENSHIFT_APP_NAME -u  $OPENSHIFT_MONGODB_DB_USERNAME -p  $OPENSHIFT_MONGODB_DB_PASSWORD --eval "db.teams.count()")
+
+#If the query says that the teams collection has 0 documents then we import the data
+if [[ $dbsize =~ "0" ]]
+then
+	#import the data
+	mongoimport --jsonArray -d $OPENSHIFT_APP_NAME -c teams --type json --file $OPENSHIFT_REPO_DIR/mlbparks.json  -h $OPENSHIFT_MONGODB_DB_HOST --port $OPENSHIFT_MONGODB_DB_PORT -u admin -p $OPENSHIFT_MONGODB_DB_PASSWORD
+
+	#make the 2D index
+	mongo $OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/$OPENSHIFT_APP_NAME --eval 'db.teams.ensureIndex( { pos : "2d" } );'
+	echo "imported the MLB stadium data"
+else
+	echo "The MongoDB database already contains the stadium information.  Skipping import."
+
+fi
