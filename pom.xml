@@ -77,7 +77,7 @@
 						<artifactId>maven-war-plugin</artifactId>
 						<version>2.4</version>
 						<configuration>
-							<failOnMissingWebXml></failOnMissingWebXml>
+							<failOnMissingWebXml>false</failOnMissingWebXml>
 							<outputDirectory>deployments</outputDirectory>
 							<warName>ROOT</warName>
 						</configuration>
