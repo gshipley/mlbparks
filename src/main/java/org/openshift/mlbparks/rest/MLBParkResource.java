@@ -1,4 +1,4 @@
-package org.openshift.webservice;
+package org.openshift.mlbparks.rest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import org.openshift.data.DBConnection;
-import org.openshift.data.MLBPark;
+import org.openshift.mlbparks.domain.MLBPark;
+import org.openshift.mlbparks.mongo.DBConnection;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -21,7 +21,7 @@ import com.mongodb.DBObject;
 
 @RequestScoped
 @Path("/parks")
-public class MLBParkWS {
+public class MLBParkResource {
 
 	@Inject
 	private DBConnection dbConnection;

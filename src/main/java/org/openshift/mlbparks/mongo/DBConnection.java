@@ -1,4 +1,4 @@
-package org.openshift.data;
+package org.openshift.mlbparks.mongo;
 
 import java.net.UnknownHostException;
 
